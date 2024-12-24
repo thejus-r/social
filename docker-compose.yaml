@@ -1,9 +1,9 @@
 services:
   db:
     image: postgres:latest
-    container_name: postgres-db
+    container_name: social-pg-db
     environment:
-      POSTGRES_DB : tiny_ledger
+      POSTGRES_DB : social 
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: adminpassword
     volumes:
