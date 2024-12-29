@@ -45,8 +45,9 @@ func generateComments(users []*store.User, posts []*store.Post) []*store.Comment
 		for j := 0; j < noOfComments; j++ {
 			userID := getRandomNumber(1, noOfUsers)
 			temp := &store.Comment{
-				PostID: posts[i].ID,
-				UserID: users[userID].ID,
+				PostID:  posts[i].ID,
+				UserID:  users[userID].ID,
+				Content: commentList[getRandomNumber(0, 9)],
 			}
 			comments = append(comments, temp)
 		}
@@ -71,7 +72,7 @@ func generateUsers(num int) []*store.User {
 func generatePosts(num int, users []*store.User) []*store.Post {
 	posts := make([]*store.Post, num)
 
-	noOfUsers := len(users)
+	noOfUsers := len(users) - 1
 
 	for i := 0; i < num; i++ {
 		posts[i] = &store.Post{

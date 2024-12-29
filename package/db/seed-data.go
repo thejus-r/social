@@ -141,7 +141,7 @@ var titles = []string{
 
 var content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 
-var comments = []string{
+var commentList = []string{
 	"Great article! Really helped me understand the basics of web development.",
 	"I disagree with some points, but overall a good read. Looking forward to more content!",
 	"This is exactly what I needed! The step-by-step guide made it so easy to follow.",
