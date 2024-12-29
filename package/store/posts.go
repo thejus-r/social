@@ -23,6 +23,32 @@ type PostStore struct {
 	db *sql.DB
 }
 
+type UpdatePostPayload struct {
+}
+
+func (s *PostStore) Update(ctx context.Context, post *Post) error {
+
+	query := `
+	UPDATE posts
+	SET title = $1, content = $2
+	WHERE id = $3
+	`
+
+	_, err := s.db.ExecContext(
+		ctx,
+		query,
+		post.Title,
+		post.Content,
+		post.ID,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (s *PostStore) Create(ctx context.Context, post *Post) error {
 
 	query := `
