@@ -30,7 +30,7 @@ func (app *application) getUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := writeJSON(w, http.StatusFound, user); err != nil {
+	if err := app.jsonResponse(w, http.StatusFound, user); err != nil {
 		app.internalServerError(w, r, err)
 		return
 	}
