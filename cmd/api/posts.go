@@ -48,6 +48,25 @@ func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request
 	}
 }
 
+type UpdatePostPayload struct {
+	Title   string   `json:"title" validate:"max=100"`
+	Content string   `json:"content" validate:"max=1000"`
+	Tags    []string `json:"tags"`
+}
+
+func (app *application) updatePostHandler(w http.ResponseWriter, r *http.Request) {
+	var payload UpdatePostPayload
+
+	if err := readJSON(w, r, &payload); err != nil {
+		app.badRequestResponse(w, r, err)
+	}
+
+	if err := Validate.Struct(payload); err != nil {
+		app.badRequestResponse(w, r, err)
+		return
+	}
+}
+
 func (app *application) getPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	idParam := chi.URLParam(r, "postID")
@@ -82,4 +101,27 @@ func (app *application) getPostHandler(w http.ResponseWriter, r *http.Request) {
 		app.internalServerError(w, r, err)
 		return
 	}
+}
+
+func (app *application) deletePostHandler(w http.ResponseWriter, r *http.Request) {
+
+	idParam := chi.URLParam(r, "postID")
+
+	id, err := strconv.ParseInt(idParam, 10, 64)
+	if err != nil {
+		app.internalServerError(w, r, err)
+	}
+
+	ctx := r.Context()
+
+	if err := app.store.Posts.Delete(ctx, id); err != nil {
+		switch {
+		case errors.Is(err, store.ErrNotFound):
+			app.notFoundResponse(w, r, err)
+		default:
+			app.internalServerError(w, r, err)
+		}
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
 }
