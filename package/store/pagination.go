@@ -8,7 +8,7 @@ import (
 type PaginatedFeedQuery struct {
 	Limit  int    `json:"limit" validate:"gte=1,lte=20"`
 	Offset int    `json:"offset" validate:"gte=0"`
-	Sort   string `json:"sort" validate:"oneoof:asc desc"`
+	Sort   string `json:"sort" validate:"oneof=asc desc"`
 }
 
 func (fq PaginatedFeedQuery) Parse(r *http.Request) (PaginatedFeedQuery, error) {
