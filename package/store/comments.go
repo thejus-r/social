@@ -36,7 +36,6 @@ func (s *CommentStore) Create(ctx context.Context, comment *Comment) error {
 		return err
 	}
 	return nil
-
 }
 
 func (s *CommentStore) GetByPostID(ctx context.Context, postID int64) ([]Comment, error) {
@@ -66,5 +65,4 @@ func (s *CommentStore) GetByPostID(ctx context.Context, postID int64) ([]Comment
 	}
 
 	return comments, nil
-
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/thejus-r/social/package/db"
 	"github.com/thejus-r/social/package/env"
 	"github.com/thejus-r/social/package/store"
+	"go.uber.org/zap"
 )
 
 const version = "0.0.1"
@@ -23,6 +24,11 @@ func main() {
 		env: env.GetString("ENV", "development"),
 	}
 
+	// Logger
+	logger := zap.Must(zap.NewProduction()).Sugar()
+	defer logger.Sync()
+
+	// Database
 	db, err := db.New(
 		cfg.db.addr,
 		cfg.db.maxOpenConns,
@@ -34,13 +40,14 @@ func main() {
 	}
 
 	defer db.Close()
-	log.Print("DB Connection pool established")
+	logger.Info("database connection pool established")
 
 	store := store.NewStorage(db)
 
 	app := &application{
 		config: cfg,
 		store:  store,
+		logger: logger,
 	}
 
 	mux := app.mount()

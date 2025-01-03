@@ -15,7 +15,6 @@ type PaginatedFeedQuery struct {
 }
 
 func (fq PaginatedFeedQuery) Parse(r *http.Request) (PaginatedFeedQuery, error) {
-
 	qs := r.URL.Query()
 	limit := qs.Get("limit")
 	if limit != "" {
